@@ -1,0 +1,73 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><meta http-equiv='Access-Control-Allow-Headers' content='Origin, X-Requested-With, Content-Type, Accept'><meta http-equiv='Access-Control-Allow-Methods' content='GET,POST,PUT,DELETE,OPTIONS'><meta http-equiv='Access-Control-Allow-Origin' content='*'><meta http-equiv='Access-Control-Allow-Credentials' content='true'><script src='https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script><script src='https://fustyles.github.io/webduino/SpBlocklyJS/GameElements_20190131/marked.min.js'></script><script src='https://fustyles.github.io/webduino/SpBlocklyJS/GameElements_20190131/gameelements.js'></script><link rel='stylesheet' href='https://fustyles.github.io/webduino/SpBlocklyJS/css/icon_custom.css' /><script src='https://fustyles.github.io/webduino/SpBlocklyJS/googlemap_20241226/googlemap.js'></script></head><body>
+<script>
+const delay = (seconds) => {
+    return new Promise((resolve) => {
+        setTimeout(resolve, seconds * 1000);
+    });
+};
+const main = async () => {
+    var _E9_87_91_E9_91_B0, _E7_B7_AF_E5_BA_A6, _E7_B6_93_E5_BA_A6, i;
+
+    let map_1;
+
+
+    let map_2;
+
+
+
+    _E9_87_91_E9_91_B0 = 'AIzaSyCjnmJJqKsk6wqcfKRXuovtuJKBWlo4OIU';
+    div_create('1', 400, 400, 0, 0, "none", 1, '#000000', '#ffffff', '#000000', 14, 1, '', 999, true);
+    div_create('2', 400, 400, 420, 0, "none", 1, '#000000', '#ffffff', '#000000', 14, 1, '', 999, true);
+    _E7_B7_AF_E5_BA_A6 = 22.584497;
+    _E7_B6_93_E5_BA_A6 = 120.289272;
+    var url = "https://maps.googleapis.com/maps/api/js?key=" + _E9_87_91_E9_91_B0 + "&callback=initMap&v=weekly&libraries=marker";
+    var s = document.createElement("script");
+    s.async = true;
+    s.defer = true;
+    s.src = url;
+    document.body.append(s);
+
+    function initMap() {
+        let position_map_1 = {
+            lat: _E7_B7_AF_E5_BA_A6,
+            lng: _E7_B6_93_E5_BA_A6
+        };
+        map_1 = new google.maps.Map(document.getElementById("gamediv_" + "1"), {
+            zoom: 18,
+            center: position_map_1,
+            mapId: "mapid_" + "1",
+            mapTypeId: "roadmap",
+        });
+        let position_map_2 = {
+            lat: _E7_B7_AF_E5_BA_A6,
+            lng: _E7_B6_93_E5_BA_A6
+        };
+        map_2 = new google.maps.StreetViewPanorama(document.getElementById("gamediv_" + "2"), {
+            position: position_map_2,
+            mapId: "mapid_" + "2",
+            pov: {
+                heading: 0,
+                pitch: 0,
+            },
+        });
+
+        if (typeof loadedMap === "function") loadedMap();
+    }
+    window.initMap = initMap;
+    async function loadedMap() {
+        addMapPoint('', map_1, _E7_B7_AF_E5_BA_A6, _E7_B6_93_E5_BA_A6, 0, '法蘭斯', '新年快樂');
+        updateMarkerContent('', 'data:image/jpeg;base64,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', "update_icon");
+        i = setInterval(async function() {
+            _E7_B7_AF_E5_BA_A6 = (typeof _E7_B7_AF_E5_BA_A6 === 'number' ? _E7_B7_AF_E5_BA_A6 : 0) + 0.0003;
+            _E7_B6_93_E5_BA_A6 = (typeof _E7_B6_93_E5_BA_A6 === 'number' ? _E7_B6_93_E5_BA_A6 : 0) + -0.00026;
+            updateMarkerContent('', ([_E7_B7_AF_E5_BA_A6, ',', _E7_B6_93_E5_BA_A6, ',', 0].join('')), "update_position");
+            centerMap(map_1, _E7_B7_AF_E5_BA_A6, _E7_B6_93_E5_BA_A6);
+            positionMap(map_2, _E7_B7_AF_E5_BA_A6, _E7_B6_93_E5_BA_A6);
+        }, 2000);
+
+    }
+    window.loadedMap = loadedMap;
+};
+main();
+</script>
+</body></html>
